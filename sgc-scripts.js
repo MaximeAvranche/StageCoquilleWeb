@@ -58,13 +58,21 @@ jQuery(document).ready(function(){
 	// Lorsque l'utilisateur saisi l'input, le message s'affichera
 	jQuery('.sgc-answer').keyup(function(){
 		// Value à récupérer
-		var sgc_txt_saisi = "Test123";
-		if(jQuery('#sgc-answer-id').val() == jQuery(sgc_txt_saisi).val()) {
-				alert("Correspond");
+		var sgc_txt_saisi = "S'il te plaît";
+		var sgc_txt_sans_accent = "S'il te plait";
+		if(jQuery('#sgc-answer-id').val() == sgc_txt_saisi) {
+				jQuery(this).next().html("<span class='sgc-pop-try-good'>🏆 Eh bien ! Je vois que tu as bien été éduqué ! Bravo à toi 👏</div>").fadeIn();
+				jQuery('#sgc-quizz-q2').css('display', 'inline').stop().delay(500).slideDown();
 			}
+		else if(jQuery('#sgc-answer-id').val() == sgc_txt_sans_accent) {
+				jQuery(this).next().html("<span class='sgc-pop-try'>⚠ Attention aux accents...</div>").fadeIn();
+				jQuery('#sgc-quizz-q2').fadeOut(0.1);
+			}
+		else {
 		// Afficher après le champs input un texte qui apparaît
 		jQuery(this).next().html("<span class='sgc-pop-try'>Essaies encore pour voir...</div>").fadeIn();
-
+		jQuery('#sgc-quizz-q2').fadeOut(0.1);
+		}
 	});
 
 
@@ -81,7 +89,7 @@ jQuery(document).click(function(){
 	}
 	else {
 		// Message indiquant qu'il ne s'agit pas de la bonne réponse
-		jQuery('.sgc-q2-error').text("Mauvaise réponse ! Tu as de la chance, je suis de bonne humeur, tu peux retenter ta chance.").stop().slideDown();
+		jQuery('.sgc-q2-error').text("❌ Mauvaise réponse ! Tu as de la chance, je suis de bonne humeur, tu peux retenter ta chance.").stop().slideDown();
 		jQuery('#sgc-quizz-q3').fadeOut(0.1);
 	}
 });
