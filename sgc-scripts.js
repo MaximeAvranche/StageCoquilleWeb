@@ -89,9 +89,21 @@ jQuery(document).click(function(){
 	}
 	else {
 		// Message indiquant qu'il ne s'agit pas de la bonne réponse
-		jQuery('.sgc-q2-error').text("❌ Mauvaise réponse ! Tu as de la chance, je suis de bonne humeur, tu peux retenter ta chance.").stop().slideDown();
+		jQuery('.sgc-q2-error').text("❌ Mauvaise réponse ! Tu as de la chance, je suis de bonne humeur, tu peux retenter ta chance.").stop().slideDown().delay(800).stop().fadeOut(0.1);
 		jQuery('#sgc-quizz-q3').fadeOut(0.1);
 	}
+});
+
+/**
+  * Paniquer!
+**/
+// Quand cliqué
+jQuery('.sgc-q3-btn').click(function(){
+	// Désactive comportement du clic
+		event.preventDefault();
+	jQuery('.sgc-q3-rep').css('display', 'inline').animate({fontSize: '9em'}, "slow");
+	// .delay(800).css('display', 'none').html("Testing")
+	// Add félicitations
 });
 
 
@@ -103,8 +115,10 @@ jQuery(document).click(function(){
 		// Désactive comportement du clic
 		event.preventDefault();
 		// Animation du btn
-		jQuery('.sgc-btn-quizz').animate({"marginLeft": "+=250px", "marginTop": "+=50px"}, "fast");
-	});
+		jQuery('.sgc-btn-quizz').animate({"marginLeft": "+2000px", "marginTop": "-1000px"}, "fast").delay(500).queue(function(next) {
+			jQuery(this).css('display', 'none');
+		});
 
+	});
 	
 });
