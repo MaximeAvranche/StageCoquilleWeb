@@ -8,6 +8,7 @@
 	 $employe_total = $resSelectDatabase['nbr_disponible'] + $resSelectDatabase['nbr_occupe'];
 	 $employe_total = 1 / $employe_total;
 	 $clients = $resSelectDatabase['nbr_clients'];
+	 $temps_moyen = $resSelectConfiguration['tps_moyen'];
 
 	 // Prise en charge d'un client
 	 $new_disponible = $resSelectDatabase['nbr_disponible'] - 1;
@@ -68,11 +69,22 @@
 
 	 // Calcul temps d'attente
 	 if ($resSelectDatabase['nbr_clients'] <= $resSelectDatabase['nbr_disponible']) {
-	 	$temps_attente = 0;
+	 	$affichage_attente = 0;
 	 }
 	 // Les employés ne sont pas disponibles - Des clients attendent
 	 else {
-	 	$temps_attente = ((30 * $clients) - ($employe_total * 30)) + (30 * $employe_total);
+	 	// Temps
+	 	$temps = (($temps_moyen * $clients) - ($employe_total * $temps_moyen)) + ($temps_moyen * $employe_total);
+		 // Affichage du temps d'attente
+		 if ($temps > 59) {
+	     	$coef_heure = $temps / 60;
+	     	$heure = floor($temps / 60);
+	     	$minute = ($coef_heure - $heure) * 60;
+	     	$affichage_attente = $heure ."h ". $minute . "min";
+	     }
+	     else {
+	     	$affichage_attente = $temps ." min";
+	     }
 	 }
 ?>
 <!DOCTYPE html>
@@ -93,7 +105,7 @@
 	</p>
 
 	<center><h2>Employés disponibles : <?= $resSelectDatabase['nbr_disponible'];  ?></h2></center>
-	<center><h2>Temps d'attente : <?= $temps_attente; ?></h2></center>
+	<center><h2>Temps d'attente : <?= $affichage_attente; ?></h2></center>
 	<center><h3>Clients en attente : <?= $resSelectDatabase['nbr_clients']; ?></h3></center>
 
 	<div align="center">
@@ -114,17 +126,5 @@
 	</div>
 	<input type="submit" name="reinitialiser" value="Réinitialiser les valeurs">
 </form>
-<?php
-$temps = 160;
-     if ($temps > 59) {
-     	$coef_heure = $temps / 60;
-     	$heure = floor($temps / 60);
-     	$minute = ($coef_heure * 60);
-     	echo $heure ."h ". $minute . "min";
-     }
-     else {
-     	echo $temps;
-     }
-?>
 </body>
 </html>
