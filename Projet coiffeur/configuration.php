@@ -15,7 +15,7 @@
 	 }
 
 
-
+	 // Mise à jour de la configuration
 	 if (isset($_POST['maj_employe'])) {
 	 	$set_value = "nbr_employe = ?";
 		$updateValues = $db->updateValues($set_value, $_POST['nbr_employe']);

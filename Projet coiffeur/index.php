@@ -23,7 +23,7 @@
 
 	 // Réinitialiser valeurs de tests
 	 if(isset($_POST['reinitialiser'])) {
-	 	$updateCreneau = $db->updateCreneau($0, 0, 3);
+	 	$updateCreneau = $db->updateCreneau($resSelectConfiguration['nbr_employe'], 0, 0, 3);
 	 	header('Location: index.php');
 	 }
 
@@ -56,8 +56,14 @@
 
 	 // Prestation terminée
 	 if (isset($_POST['terminee'])) {
-		 	$addEmploye = $db->addEmploye($clcDisponible, $clcOccupe);
-		 	header('Location: index.php');
+	 		// Bloquer les valeurs négatives
+	 		if ($resSelectDatabase['nbr_occupe'] == 0) {
+	 			header('Location: index.php');
+	 		}
+		 		else {
+		 			$addEmploye = $db->addEmploye($clcDisponible, $clcOccupe);
+			 		header('Location: index.php');
+		 		}
 	 }
 
 	 // Calcul temps d'attente
