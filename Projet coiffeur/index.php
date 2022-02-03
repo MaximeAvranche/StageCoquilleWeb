@@ -112,9 +112,19 @@
 			  </tr>
 		</table>
 	</div>
-
-
 	<input type="submit" name="reinitialiser" value="Réinitialiser les valeurs">
 </form>
+<?php
+$temps = 160;
+     if ($temps > 59) {
+     	$coef_heure = $temps / 60;
+     	$heure = floor($temps / 60);
+     	$minute = ($coef_heure * 60);
+     	echo $heure ."h ". $minute . "min";
+     }
+     else {
+     	echo $temps;
+     }
+?>
 </body>
 </html>
