@@ -1,7 +1,10 @@
 <?php
+	// Appel des fonctions et récupération des données
 	include 'includes/functions.php';
 	 $db = new ConnexionBase;
 	 $resSelectDatabase = $db->selectDatabase();
+	 $resSelectConfiguration = $db->selectConfiguration();
+	 // Définition des variables
 	 $employe_total = $resSelectDatabase['nbr_disponible'] + $resSelectDatabase['nbr_occupe'];
 	 $employe_total = 1 / $employe_total;
 	 $clients = $resSelectDatabase['nbr_clients'];
@@ -20,7 +23,7 @@
 
 	 // Réinitialiser valeurs de tests
 	 if(isset($_POST['reinitialiser'])) {
-	 	$updateCreneau = $db->updateCreneau(2, 0, 0, 3);
+	 	$updateCreneau = $db->updateCreneau($0, 0, 3);
 	 	header('Location: index.php');
 	 }
 
@@ -70,7 +73,8 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title></title>
+	<title>Gestion</title>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
 <form method="POST" action="">

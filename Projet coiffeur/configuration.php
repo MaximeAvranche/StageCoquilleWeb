@@ -1,13 +1,39 @@
 <?php
 	include 'includes/functions.php';
 	 $db = new ConnexionBase;
-	 $resSelectDatabase = $db->selectDatabase();
+	 $resSelectConfiguration = $db->selectConfiguration();
+
+	 // Variables départ
+	 $nbr_employe = $resSelectConfiguration['nbr_employe'];
+	 $tps_moyen = $resSelectConfiguration['tps_moyen'];
+	 // Conditions
+	 if (is_null($nbr_employe)) {
+	 	$nbr_employe = "Non défini";
+	 }
+	 if (is_null($tps_moyen)) {
+	 	$tps_moyen = "Non défini";
+	 }
+
+
+
+	 if (isset($_POST['maj_employe'])) {
+	 	$set_value = "nbr_employe = ?";
+		$updateValues = $db->updateValues($set_value, $_POST['nbr_employe']);
+		header('Location: configuration.php');
+	 }
+
+	 if (isset($_POST['maj_temps'])) {
+	 	$set_value = "tps_moyen = ?";
+		$updateValues = $db->updateValues($set_value, $_POST['tps_attente']);
+		header('Location: configuration.php');
+	 }
 ?>
 <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="utf-8">
-	<title></title>
+	<title>Configuration</title>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
 <form method="POST" action="">
@@ -16,17 +42,23 @@
 	</p>
 
 	<center>
-		<h3>Employés actuels : <?= $resSelectDatabase['nbr_disponible'];  ?></h3>
-		<h3>Temps moyen estimé : <?= $resSelectDatabase['nbr_disponible'];  ?></h3>
+		<h3>Employés actuels : <?= $nbr_employe;  ?></h3>
+		<h3>Temps moyen estimé : <?= $tps_moyen;  ?> min</h3>
+		<p><strong>Phrase d'annonce du temps :</strong> <em>"<?= $resSelectConfiguration['phrase_accroche']; ?> "</em></p>
 	</center>
 	<div>
 		<h2>Général</h2>
-		<legend>Nombre de clients</legend>
-		<input type="number" name="nbr_clients" value="<?= $resSelectDatabase['nbr_clients'] ?>" />
+		<label>Nombre d'employés</label>
+		<input type="number" name="nbr_employe" min="1" value="<?= $resSelectConfiguration['nbr_employe'] ?>" />
+		<input type="submit" name="maj_employe" value="Mettre à jour" />
 		<br /><br />
-
-
-		<input type="submit" name="maj" />
+		<hr />
+		<br />
+		<label>Temps moyen</label>
+		<input type="number" name="tps_attente" min="0" value="<?= $resSelectConfiguration['tps_moyen'] ?>" />
+		<input type="submit" name="maj_temps" value="Changer le temps" />
+		<br /><br />
+		<hr />
 	</div>
 </form>
 </body>
