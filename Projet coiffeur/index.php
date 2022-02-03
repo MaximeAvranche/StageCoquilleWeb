@@ -6,6 +6,17 @@
 	 $employe_total = 1 / $employe_total;
 	 $clients = $resSelectDatabase['nbr_clients'];
 
+	 // Prise en charge d'un client
+	 $new_disponible = $resSelectDatabase['nbr_disponible'] - 1;
+	 $new_clients = $resSelectDatabase['nbr_clients'] - 1;
+	 // Mise à jour d'un créneau
+	 $new_occupe = $resSelectDatabase['nbr_occupe'] + 1;
+	 $new_attente = $resSelectDatabase['tps_attente'] + 30;
+	 // Libération d'un employé
+	 $employeOccupe = $resSelectDatabase['nbr_occupe'];
+	 $clcDisponible = $resSelectDatabase['nbr_disponible'] + 1;
+	 $clcOccupe = $resSelectDatabase['nbr_occupe'] - 1;
+
 
 	 // Réinitialiser valeurs de tests
 	 if(isset($_POST['reinitialiser'])) {
@@ -21,9 +32,6 @@
 
 	 // Prise en charge d'un client
 	 if (isset($_POST['prisencharge'])) {
-	 	$new_disponible = $resSelectDatabase['nbr_disponible'] - 1;
-	 	$new_clients = $resSelectDatabase['nbr_clients'] - 1;
-
 	 	// Employés supérieurs aux clients
 	 	if ($resSelectDatabase['nbr_disponible'] >= $resSelectDatabase['nbr_client']) {
 	 		$new_occupe = $resSelectDatabase['nbr_occupe'] + 1;
@@ -32,22 +40,18 @@
 	 	}
 	 	// Employés inférieurs aux clients
 	 	else if ($resSelectDatabase['nbr_disponible'] < $resSelectDatabase['nbr_client']) {
-		 	$new_occupe = $resSelectDatabase['nbr_occupe'] + 1;
-		 	$new_attente = $resSelectDatabase['tps_attente'] + 30;
 		 	$updateCreneau = $db->updateCreneau($new_disponible, $new_attente, $new_clients);
 		 	header('Location: index.php');
 	 	}
 	 }
 
-
 	 // Prestation terminée
 	 if (isset($_POST['terminee'])) {
-	 	$employeOccupe = $resSelectDatabase['nbr_occupe'];
-	 	$clcDisponible = $resSelectDatabase['nbr_disponible'] + 1;
-	 	$clcOccupe = $resSelectDatabase['nbr_occupe'] - 1;
 		 	$addEmploye = $db->addEmploye($clcDisponible, $clcOccupe);
 		 	header('Location: index.php');
 	 }
+
+
 
 	 // Calcul temps d'attente
 	 if ($resSelectDatabase['nbr_clients'] <= $resSelectDatabase['nbr_disponible']) {
