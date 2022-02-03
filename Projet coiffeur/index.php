@@ -32,16 +32,22 @@
 
 	 // Prise en charge d'un client
 	 if (isset($_POST['prisencharge'])) {
-	 	// Employés supérieurs aux clients
-	 	if ($resSelectDatabase['nbr_disponible'] >= $resSelectDatabase['nbr_client']) {
-	 		$new_occupe = $resSelectDatabase['nbr_occupe'] + 1;
-	 		$updateCreneau = $db->updateCreneau($new_disponible, $new_occupe, $resSelectDatabase['tps_attente'], $new_clients);
-	 		header('Location: index.php');
-	 	}
-	 	// Employés inférieurs aux clients
-	 	else if ($resSelectDatabase['nbr_disponible'] < $resSelectDatabase['nbr_client']) {
-		 	$updateCreneau = $db->updateCreneau($new_disponible, $new_attente, $new_clients);
-		 	header('Location: index.php');
+	 	// Bloquer les valeurs négatives
+		 if ($resSelectDatabase['nbr_clients'] == 0 OR $resSelectDatabase['nbr_disponible'] == 0) {
+		 	header('Location: index.php');	
+		 }
+		 else {
+		 	// Employés supérieurs aux clients
+		 	if ($resSelectDatabase['nbr_disponible'] >= $resSelectDatabase['nbr_client']) {
+		 		$new_occupe = $resSelectDatabase['nbr_occupe'] + 1;
+		 		$updateCreneau = $db->updateCreneau($new_disponible, $new_occupe, $resSelectDatabase['tps_attente'], $new_clients);
+		 		header('Location: index.php');
+		 	}
+		 	// Employés inférieurs aux clients
+		 	else if ($resSelectDatabase['nbr_disponible'] < $resSelectDatabase['nbr_client']) {
+			 	$updateCreneau = $db->updateCreneau($new_disponible, $new_attente, $new_clients);
+			 	header('Location: index.php');
+		 	}
 	 	}
 	 }
 
@@ -50,8 +56,6 @@
 		 	$addEmploye = $db->addEmploye($clcDisponible, $clcOccupe);
 		 	header('Location: index.php');
 	 }
-
-
 
 	 // Calcul temps d'attente
 	 if ($resSelectDatabase['nbr_clients'] <= $resSelectDatabase['nbr_disponible']) {
