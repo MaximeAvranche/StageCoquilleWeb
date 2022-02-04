@@ -5,12 +5,14 @@
 	 $resSelectDatabase = $db->selectDatabase();
 	 $resSelectConfiguration = $db->selectConfiguration();
 	 $resSelectInformation = $db->selectInformation();
-
+	 $resCountEmployee = $db->countEmployee();
+	 
 	 // Définition des variables
 	 $employe_total = $resSelectDatabase['nbr_disponible'] + $resSelectDatabase['nbr_occupe'];
 	 $employe_total = 1 / $employe_total;
 	 $clients = $resSelectDatabase['nbr_clients'];
 	 $temps_moyen = $resSelectConfiguration['tps_moyen'];
+	 $nbr_employe_total = $resCountEmployee['id'] - 1;
 
 	 // Prise en charge d'un client
 	 $new_disponible = $resSelectDatabase['nbr_disponible'] - 1;
@@ -26,7 +28,7 @@
 
 	 // Réinitialiser valeurs de tests
 	 if(isset($_POST['reinitialiser'])) {
-	 	$updateCreneau = $db->updateCreneau($resSelectConfiguration['nbr_employe'], 0, 0, 3);
+	 	$updateCreneau = $db->updateCreneau($nbr_employe_total, 0, 0, 3);
 	 	header('Location: index.php');
 	 }
 
@@ -120,7 +122,6 @@
 	<center><h2>Employés disponibles : <?= $resSelectDatabase['nbr_disponible'];  ?></h2></center>
 	<center><h2>Temps d'attente : <?= $affichage_attente; ?></h2></center>
 	<center><h3>Clients en attente : <?= $resSelectDatabase['nbr_clients']; ?></h3></center>
-
 	<div style="display: flex">
 		<?php foreach ($resSelectInformation as $infos) {?>
 			<p><?= $infos['nom_employe']; ?></p>

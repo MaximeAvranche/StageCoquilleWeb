@@ -3,12 +3,14 @@
 	 $db = new ConnexionBase;
 	 $resSelectConfiguration = $db->selectConfiguration();
 	 $resSelectInformation = $db->selectInformation();
+	 $resCountEmployee = $db->countEmployee();
 
 	 // Variables départ
-	 $nbr_employe = $resSelectConfiguration['nbr_employe'];
 	 $tps_moyen = $resSelectConfiguration['tps_moyen'];
+	 $nbr_employe_total = $resCountEmployee['id'] - 1;
+
 	 // Conditions
-	 if (is_null($nbr_employe)) {
+	 if (is_null($nbr_employe_total)) {
 	 	$nbr_employe = "Non défini";
 	 }
 	 if (is_null($tps_moyen)) {
@@ -17,11 +19,11 @@
 
 
 	 // Mise à jour de la configuration
-	 if (isset($_POST['maj_employe'])) {
+	 /*if (isset($_POST['maj_employe'])) {
 	 	$set_value = "nbr_employe = ?";
 		$updateValues = $db->updateValues($set_value, $_POST['nbr_employe']);
 		header('Location: configuration.php');
-	 }
+	 }*/
 
 	 if (isset($_POST['maj_temps'])) {
 	 	$set_value = "tps_moyen = ?";
@@ -59,16 +61,14 @@
 	</p>
 
 	<center>
-		<h3>Employés actuels : <?= $nbr_employe;  ?></h3>
+		<h3>Employés actuels : <?= $nbr_employe_total;  ?></h3>
 		<h3>Temps moyen estimé : <?= $tps_moyen;  ?> min</h3>
 		<p><strong>Phrase d'annonce du temps :</strong> <em>"<?= $resSelectConfiguration['phrase_accroche']; ?> "</em></p>
 	</center>
 	<div>
 		<h2>Général</h2>
-		<label>Nombre d'employés</label>
-		<input type="number" name="nbr_employe" min="1" value="<?= $resSelectConfiguration['nbr_employe'] ?>" />
-		<input type="submit" name="maj_employe" value="Mettre à jour" />
-		<br /><br />
+		<p>Nombre d'employés : <?= $nbr_employe_total;  ?></p>
+		<br />
 		<hr />
 		<br /><br />
 		<label>Temps moyen</label>

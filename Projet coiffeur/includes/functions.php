@@ -42,6 +42,7 @@
           function addEmploye($nbr_disponible, $nbr_occupe) {
             $addEmploye = $this->bdd->prepare('UPDATE current SET nbr_disponible = ?, nbr_occupe = ? WHERE id = 1');
             $addEmploye->execute(array($nbr_disponible, $nbr_occupe));
+
           }
 
           // Mise à jour d'un jour
@@ -75,6 +76,7 @@
           function break($breakTimeDisponible, $breakTimeOccupe) {
             $break = $this->bdd->prepare('UPDATE current SET nbr_disponible = ?, nbr_occupe = ? WHERE id = 1');
             $break->execute(array($breakTimeDisponible, $breakTimeOccupe));
+
           }
 
 
@@ -101,7 +103,7 @@
           }*/
           
 
-          // Modifier le nombre d'employés
+          /*// Modifier le nombre d'employés
           function updateValues($set_value, $value) {
             $updateValues = $this->bdd->prepare('UPDATE configuration SET '.$set_value.' WHERE id = 1');
             $updateValues->execute(array($value));
@@ -109,18 +111,38 @@
             if ($set_value == "nbr_employe = ?") {
               $nbr_employe = $this->addEmploye($value, 0);
             }
-          }
+          }*/
 
           // Ajouter le prénom d'un employé
           function addName($name) {
-            $addName = $this->bdd->prepare('INSERT INTO configuration VALUES(0, null, ?, null, null)');
+            $addName = $this->bdd->prepare('INSERT INTO configuration VALUES(0, ?, null, null)');
             $addName->execute(array($name));
+            // Afficher sur l'administration le nombre exact d'employé sans modifier les autres valeurs
+            $resCountEmployee = $this->countEmployee();
+            $total = $resCountEmployee['id'] - 1;
+            $this->updateEmploye($total);
+          }
+
+          // Mise à jour du nombre d'employé
+          function updateEmploye($number) {
+            $updateEmploye = $this->bdd->prepare('UPDATE current SET nbr_disponible = ? WHERE id = 1');
+            $updateEmploye->execute(array($number));
           }
 
           // Supprimer un employé
           function deleteEmploye($id_employe) {
             $deleteEmploye = $this->bdd->prepare('DELETE FROM configuration WHERE id = ?');
             $deleteEmploye->execute(array($id_employe));
+            // Retirer un employé sans modifier les autres valeurs
+          }
+
+
+          // Compter nombre d'employés
+          function countEmployee() {
+            $countEmployee = $this->bdd->prepare('SELECT COUNT(*) as id FROM configuration');
+            $countEmployee->execute();
+            $resCountEmployee = $countEmployee->fetch();
+            return $resCountEmployee;
           }
 
 
