@@ -97,12 +97,6 @@
 
 
 
-
-          // Affichage du temps d'attente
-
-
-
-
           /****************************************
            * 
            * FONCTIONS DE CONFIGURATION
@@ -155,8 +149,12 @@
           function deleteEmploye($id_employe) {
             $deleteEmploye = $this->bdd->prepare('DELETE FROM configuration WHERE id = ?');
             $deleteEmploye->execute(array($id_employe));
-            // Retirer un employé sans modifier les autres valeurs
 
+            // Récupération des données nécessaires
+            $resSelectDatabase = $this->selectDatabase();
+            // Retirer un employé sans modifier les autres valeurs
+            $modifyDisponible = $this->bdd->prepare('UPDATE current SET nbr_disponible = ? WHERE id = 1');
+            $modifyDisponible->execute(array($resSelectDatabase['nbr_disponible'] - 1));
           }
 
 
