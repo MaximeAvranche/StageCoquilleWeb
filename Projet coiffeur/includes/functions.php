@@ -59,6 +59,18 @@
             return $resSelectInformation;
           }
 
+          // Modifier le temps d'attente
+          function updateTime($affichage_attente) {
+            $updateTime = $this->bdd->prepare('UPDATE current SET tps_attente = ? WHERE id = 1');
+            $updateTime->execute(array($affichage_attente));
+          }
+
+          // Modification temps d'attente si 0 
+          function allDispo($tps) {
+            $allDispo = $this->bdd->prepare('UPDATE current SET tps_attente = ? WHERE id = 1');
+            $allDispo->execute(array($tps));
+          }
+
 
 
           /****************************************
@@ -97,6 +109,12 @@
           function addName($name) {
             $addName = $this->bdd->prepare('INSERT INTO configuration VALUES(0, null, ?, null, null)');
             $addName->execute(array($name));
+          }
+
+          // Supprimer un employé
+          function deleteEmploye($id_employe) {
+            $deleteEmploye = $this->bdd->prepare('DELETE FROM configuration WHERE id = ?');
+            $deleteEmploye->execute(array($id_employe));
           }
 
 

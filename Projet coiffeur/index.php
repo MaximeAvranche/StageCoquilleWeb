@@ -69,9 +69,11 @@
 		 		}
 	 }
 
+
 	 // Calcul temps d'attente
 	 if ($resSelectDatabase['nbr_clients'] <= $resSelectDatabase['nbr_disponible']) {
 	 	$affichage_attente = 0;
+	 	$db->updateTime($affichage_attente);
 	 }
 	 // Les employés ne sont pas disponibles - Des clients attendent
 	 else {
@@ -83,9 +85,11 @@
 	     	$heure = floor($temps / 60);
 	     	$minute = ($coef_heure - $heure) * 60;
 	     	$affichage_attente = $heure ."h ". $minute . "min";
+	     	$db->updateTime($affichage_attente);
 	     }
 	     else {
 	     	$affichage_attente = $temps ." min";
+	     	$db->updateTime($affichage_attente);
 	     }
 	 }
 ?>
@@ -101,7 +105,7 @@
 	<p>
 		<h2>Configuration</h2>
 		<label>Nombre de clients</label>
-		<input type="number" name="nbr_clients" value="<?= $resSelectDatabase['nbr_clients'] ?>" />
+		<input type="number" name="nbr_clients" min="0" value="<?= $resSelectDatabase['nbr_clients'] ?>" />
 		<input type="submit" name="maj" />
 	</p>
 
@@ -111,9 +115,10 @@
 
 	<div style="display: flex">
 		<?php foreach ($resSelectInformation as $infos) {?>
-		<p><?= $infos['nom_employe']; ?></p>
-		<input type="submit" name="prisencharge" value="Je prends en charge un client" />
-		<input type="submit" name="terminee" value="Prestation terminée" /><?php } ?>
+			<p><?= $infos['nom_employe']; ?></p>
+			<input type="submit" name="prisencharge" value="Je prends en charge un client" />
+			<input type="submit" name="terminee" value="Prestation terminée" />
+		<?php } ?>
 	</div>
 	
 	<input type="submit" name="reinitialiser" value="Réinitialiser les valeurs">

@@ -2,6 +2,7 @@
 	include 'includes/functions.php';
 	 $db = new ConnexionBase;
 	 $resSelectConfiguration = $db->selectConfiguration();
+	 $resSelectInformation = $db->selectInformation();
 
 	 // Variables départ
 	 $nbr_employe = $resSelectConfiguration['nbr_employe'];
@@ -31,6 +32,16 @@
 	 if (isset($_POST['maj_add'])) {
 		$addName = $db->addName($_POST['name_employe']);
 		header('Location: configuration.php');
+	 }
+
+	  // Supprimer un employe
+	 if (isset($_GET['action'])) {
+	 $actionName = htmlspecialchars($_GET['action']);
+		 if ($actionName == "DeleteEmploye") {
+		 	$id_employe = htmlspecialchars($_GET['id']);
+		 	$db->deleteEmploye($id_employe);
+		 	header('Location: configuration.php');
+		 }
 	 }
 
 ?>
@@ -72,6 +83,13 @@
 		<br /><br />
 		<hr />
 	</div>
+
+	<div style="display: flex">
+		<?php foreach ($resSelectInformation as $infos) {?>
+		<p><?= $infos['nom_employe']; ?></p>
+		<a href="configuration.php?action=DeleteEmploye&amp;id=<?= $infos['id'] ?>">Supprimer</a>
+
+	<?php } ?>
 </form>
 </body>
 </html>
