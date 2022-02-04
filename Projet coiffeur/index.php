@@ -95,7 +95,10 @@
 
 	 // Temps de pause
 	 if (isset($_POST['break'])) {
-	 	//
+	 	$breakTimeDisponible = $resSelectDatabase['nbr_disponible'] - 1;
+	 	$breakTimeOccupe = $resSelectDatabase['nbr_occupe'] + 1;
+	 	$db->break($breakTimeDisponible, $breakTimeOccupe);
+	 	header('Location: index.php');
 	 }
 ?>
 <!DOCTYPE html>

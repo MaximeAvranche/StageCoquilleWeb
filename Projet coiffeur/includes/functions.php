@@ -72,9 +72,9 @@
           }
 
           // Break time
-          function break($number) {
-            $break = $this->bdd->prepare('UPDATE current SET nbr_occupe = ? WHERE id = 1');
-            $break->execute(array($number));
+          function break($breakTimeDisponible, $breakTimeOccupe) {
+            $break = $this->bdd->prepare('UPDATE current SET nbr_disponible = ?, nbr_occupe = ? WHERE id = 1');
+            $break->execute(array($breakTimeDisponible, $breakTimeOccupe));
           }
 
 
