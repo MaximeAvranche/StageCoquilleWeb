@@ -4,6 +4,8 @@
 	 $db = new ConnexionBase;
 	 $resSelectDatabase = $db->selectDatabase();
 	 $resSelectConfiguration = $db->selectConfiguration();
+	 $resSelectInformation = $db->selectInformation();
+
 	 // Définition des variables
 	 $employe_total = $resSelectDatabase['nbr_disponible'] + $resSelectDatabase['nbr_occupe'];
 	 $employe_total = 1 / $employe_total;
@@ -98,9 +100,8 @@
 <form method="POST" action="">
 	<p>
 		<h2>Configuration</h2>
-		<legend>Nombre de clients</legend>
+		<label>Nombre de clients</label>
 		<input type="number" name="nbr_clients" value="<?= $resSelectDatabase['nbr_clients'] ?>" />
-		<br />
 		<input type="submit" name="maj" />
 	</p>
 
@@ -108,22 +109,13 @@
 	<center><h2>Temps d'attente : <?= $affichage_attente; ?></h2></center>
 	<center><h3>Clients en attente : <?= $resSelectDatabase['nbr_clients']; ?></h3></center>
 
-	<div align="center">
-		<table style="margin-top: 100px; text-align: center;">
-			  <tr>
-			    <th>Maxime</th>
-			    <th>Steven</th>
-			  </tr>
-			  <tr>
-			    <td><input type="submit" name="prisencharge" value="Je prends en charge un client" /></td>
-			    <td><input type="submit" name="prisencharge" value="Je prends en charge un client" /></td>
-			  </tr>
-			  <tr>
-			    <td><input type="submit" name="terminee" value="Prestation terminée" /></td>
-			    <td><input type="submit" name="terminee" value="Prestation terminée" /></td>
-			  </tr>
-		</table>
+	<div style="display: flex">
+		<?php foreach ($resSelectInformation as $infos) {?>
+		<p><?= $infos['nom_employe']; ?></p>
+		<input type="submit" name="prisencharge" value="Je prends en charge un client" />
+		<input type="submit" name="terminee" value="Prestation terminée" /><?php } ?>
 	</div>
+	
 	<input type="submit" name="reinitialiser" value="Réinitialiser les valeurs">
 </form>
 </body>

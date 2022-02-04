@@ -27,6 +27,12 @@
 		$updateValues = $db->updateValues($set_value, $_POST['tps_attente']);
 		header('Location: configuration.php');
 	 }
+
+	 if (isset($_POST['maj_add'])) {
+		$addName = $db->addName($_POST['name_employe']);
+		header('Location: configuration.php');
+	 }
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -53,10 +59,16 @@
 		<input type="submit" name="maj_employe" value="Mettre à jour" />
 		<br /><br />
 		<hr />
-		<br />
+		<br /><br />
 		<label>Temps moyen</label>
 		<input type="number" name="tps_attente" min="0" value="<?= $resSelectConfiguration['tps_moyen'] ?>" />
 		<input type="submit" name="maj_temps" value="Changer le temps" />
+		<br /><br />
+		<hr />
+		<br /><br />
+		<label>Prénom de l'employé à ajouter</label>
+		<input type="text" name="name_employe" placeholder="Saisir un prénom" />
+		<input type="submit" name="maj_add" value="Créer l'employé" />
 		<br /><br />
 		<hr />
 	</div>

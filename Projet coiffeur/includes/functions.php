@@ -48,7 +48,17 @@
           function updateCreneau($nbr_disponible, $nbr_occupe, $tps_attente, $nbr_clients) {
             $updateCreneau = $this->bdd->prepare('UPDATE current SET nbr_disponible = ?, nbr_occupe = ?, tps_attente = ?, nbr_clients = ? WHERE id = 1');
             $updateCreneau->execute(array($nbr_disponible, $nbr_occupe, $tps_attente, $nbr_clients));
-            }
+          }
+
+
+          // Récupérer les informations 
+          function selectInformation() {
+            $selectInformation = $this->bdd->prepare('SELECT * FROM configuration WHERE nom_employe is NOT NULL');
+            $selectInformation->execute();
+            $resSelectInformation = $selectInformation->fetchAll();
+            return $resSelectInformation;
+          }
+
 
 
           /****************************************
@@ -81,6 +91,12 @@
             if ($set_value == "nbr_employe = ?") {
               $nbr_employe = $this->addEmploye($value, 0);
             }
+          }
+
+          // Ajouter le prénom d'un employé
+          function addName($name) {
+            $addName = $this->bdd->prepare('INSERT INTO configuration VALUES(0, null, ?, null, null)');
+            $addName->execute(array($name));
           }
 
 
