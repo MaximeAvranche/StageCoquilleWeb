@@ -92,6 +92,11 @@
 	     	$db->updateTime($affichage_attente);
 	     }
 	 }
+
+	 // Temps de pause
+	 if (isset($_POST['break'])) {
+	 	//
+	 }
 ?>
 <!DOCTYPE html>
 <html>
@@ -120,8 +125,11 @@
 			<input type="submit" name="terminee" value="Prestation terminée" />
 		<?php } ?>
 	</div>
-	
-	<input type="submit" name="reinitialiser" value="Réinitialiser les valeurs">
+	<br /><br />
+	<input type="submit" name="reinitialiser" value="Réinitialiser les valeurs" />
+
+	<br /><br /><br /><br /><br /><br />
+	<input type="submit" name="break" value="Je prends une pause" />
 </form>
 </body>
 </html>
