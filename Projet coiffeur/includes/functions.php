@@ -79,6 +79,28 @@
 
           }
 
+          // Calcul & Affichage du temps d'attente
+          function waitingTime($temps) {
+            if ($temps > 59) {
+              $coef_heure = $temps / 60;
+              $heure = floor($temps / 60);
+              $minute = ($coef_heure - $heure) * 60;
+              $affichage_attente = $heure ."h ". $minute . "min";
+            }
+            else {
+              $affichage_attente = $temps ." min";
+            }
+
+            return $affichage_attente;
+          }
+
+
+
+
+
+          // Affichage du temps d'attente
+
+
 
 
           /****************************************
@@ -134,6 +156,7 @@
             $deleteEmploye = $this->bdd->prepare('DELETE FROM configuration WHERE id = ?');
             $deleteEmploye->execute(array($id_employe));
             // Retirer un employé sans modifier les autres valeurs
+
           }
 
 

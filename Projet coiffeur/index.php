@@ -6,7 +6,7 @@
 	 $resSelectConfiguration = $db->selectConfiguration();
 	 $resSelectInformation = $db->selectInformation();
 	 $resCountEmployee = $db->countEmployee();
-	 
+
 	 // Définition des variables
 	 $employe_total = $resSelectDatabase['nbr_disponible'] + $resSelectDatabase['nbr_occupe'];
 	 $employe_total = 1 / $employe_total;
@@ -81,18 +81,8 @@
 	 else {
 	 	// Temps
 	 	$temps = (($temps_moyen * $clients) - ($employe_total * $temps_moyen)) + ($temps_moyen * $employe_total);
-		 // Affichage du temps d'attente
-		 if ($temps > 59) {
-	     	$coef_heure = $temps / 60;
-	     	$heure = floor($temps / 60);
-	     	$minute = ($coef_heure - $heure) * 60;
-	     	$affichage_attente = $heure ."h ". $minute . "min";
-	     	$db->updateTime($affichage_attente);
-	     }
-	     else {
-	     	$affichage_attente = $temps ." min";
-	     	$db->updateTime($affichage_attente);
-	     }
+	 	$db->updateTime($temps);
+		$affichage_attente = $db->waitingTime($temps);
 	 }
 
 	 // Temps de pause

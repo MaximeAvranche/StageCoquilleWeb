@@ -7,9 +7,19 @@
 
 	 // Définition des variables
 	 $affichage_attente = $resSelectDatabase['tps_attente'];
+	 $employe_total = $resSelectDatabase['nbr_disponible'] + $resSelectDatabase['nbr_occupe'];
+	 $employe_total = 1 / $employe_total;
+	 $clients = $resSelectDatabase['nbr_clients'];
+	 $temps_moyen = $resSelectConfiguration['tps_moyen'];
+
+	 // Fonctions
 	 if ($affichage_attente == 0) {
 	 	$affichage_attente = "Prise en charge instantanée";
 	 }
+	 else {
+	 	$temps = (($temps_moyen * $clients) - ($employe_total * $temps_moyen)) + ($temps_moyen * $employe_total);
+		$affichage_attente = $db->waitingTime($temps);
+	}
 ?>
 <!DOCTYPE html>
 <html>
