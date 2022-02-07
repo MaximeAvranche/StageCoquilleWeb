@@ -17,6 +17,15 @@
 	 	$tps_moyen = "Non défini";
 	 }
 
+	 // Message configuration - BVN
+	 if ($resCountEmployee['id'] == 1) {
+	 	$message_bienvenue = "<p style='margin: 50px 0px 75px 50px;'>Bienvenue dans votre interface de configuration. <br />Ici, vous pourrez ajouter des employés, modifier le temps d'attente moyen ou encore modifier la phrase d'accroche du temps d'attente.<br />Par défaut, certaines valeurs ont été configurées. Modifiez-les à votre guise.</p>";
+	 	$message_employe = "<p style='margin: 10px 0px 40px 25px;'>Oh, je vois que vous n'avez pas d'employé configuré. Remédions ensemble à cela. <br /> Il vous suffit d'ajouter le nom de votre premier employé afin de le créer et de l'ajouter à votre liste.</p>";
+	 }
+	 else {
+	 	$message_employe = null;
+	 	$message_bienvenue = null;
+	 }
 
 	 // Mise à jour de la configuration
 	 /*if (isset($_POST['maj_employe'])) {
@@ -56,18 +65,18 @@
 </head>
 <body>
 <form method="POST" action="">
-	<p>
 		<h1>Configuration des données</h1>
-	</p>
+		<?= $message_bienvenue; ?>
 
 	<center>
-		<h3>Employés actuels : <?= $nbr_employe_total;  ?></h3>
-		<h3>Temps moyen estimé : <?= $tps_moyen;  ?> min</h3>
+		<h3>Employé(s) configuré(s): <?= $nbr_employe_total;  ?></h3>
+		<h3>Temps moyen estimé fixé à <?= $tps_moyen;  ?> min</h3>
 		<p><strong>Phrase d'annonce du temps :</strong> <em>"<?= $resSelectConfiguration['phrase_accroche']; ?> "</em></p>
 	</center>
 	<div>
 		<h2>Général</h2>
-		<p>Nombre d'employés : <?= $nbr_employe_total;  ?></p>
+		<?= $message_employe; ?>
+		<p>Nombre d'employé(s) : <strong><?= $nbr_employe_total;  ?></strong></p>
 		<br />
 		<hr />
 		<br /><br />

@@ -4,6 +4,7 @@
 	 $db = new ConnexionBase;
 	 $resSelectDatabase = $db->selectDatabase();
 	 $resSelectConfiguration = $db->selectConfiguration();
+	 $resCountEmployee = $db->countEmployee();
 
 	 // Définition des variables
 	 $affichage_attente = $resSelectDatabase['tps_attente'];
@@ -12,13 +13,19 @@
 	 $clients = $resSelectDatabase['nbr_clients'];
 	 $temps_moyen = $resSelectConfiguration['tps_moyen'];
 
-	 // Fonctions
-	 if ($affichage_attente == 0) {
-	 	$affichage_attente = "Prise en charge instantanée";
+	 // Message configuration - BVN
+	 if ($resCountEmployee['id'] == 1) {
+	 	$affichage_attente = "<a href='configuration.php' style='text-decoration: none; color: red'>Non configuré</a>";
 	 }
 	 else {
-	 	$temps = (($temps_moyen * $clients) - ($employe_total * $temps_moyen)) + ($temps_moyen * $employe_total);
-		$affichage_attente = $db->waitingTime($temps);
+	 	// Fonctions
+		 if ($affichage_attente == 0) {
+		 	$affichage_attente = "Prise en charge instantanée";
+		 }
+		 else {
+		 	$temps = (($temps_moyen * $clients) - ($employe_total * $temps_moyen)) + ($temps_moyen * $employe_total);
+			$affichage_attente = $db->waitingTime($temps);
+		}
 	}
 ?>
 <!DOCTYPE html>

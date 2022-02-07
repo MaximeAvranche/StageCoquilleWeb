@@ -98,6 +98,7 @@
 <head>
 	<meta charset="utf-8">
 	<title>Gestion</title>
+	<script src="js/jquery-3-6-0.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
@@ -109,9 +110,9 @@
 		<input type="submit" name="maj" />
 	</p>
 
-	<center><h2>Employés disponibles : <?= $resSelectDatabase['nbr_disponible'];  ?></h2></center>
+	<center><h2>Employé(s) disponible(s) : <?= $resSelectDatabase['nbr_disponible'];  ?></h2></center>
 	<center><h2>Temps d'attente : <?= $affichage_attente; ?></h2></center>
-	<center><h3>Clients en attente : <?= $resSelectDatabase['nbr_clients']; ?></h3></center>
+	<center><h3>Client(s) en attente : <?= $resSelectDatabase['nbr_clients']; ?></h3></center>
 	<div style="display: flex">
 		<?php foreach ($resSelectInformation as $infos) {?>
 			<p><?= $infos['nom_employe']; ?></p>
