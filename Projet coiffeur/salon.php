@@ -44,7 +44,7 @@
 		color: #474747;
 	}
 	</style>
-	<meta http-equiv="refresh" content="1;URL=salon.php">
+	<!--<meta http-equiv="refresh" content="1;URL=salon.php">-->
 <form method="POST" action="" style="margin-top: 30vh;">
 	<center><h2 style="font-size: 4.5rem;"><?= $resSelectConfiguration['phrase_accroche'] ?> </h2>
 		<h2><span style="font-size: 6.5rem; color: #1E1E1E"><?= $affichage_attente; ?></span></h2></center>
