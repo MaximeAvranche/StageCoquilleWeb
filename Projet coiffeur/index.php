@@ -36,6 +36,21 @@
 	<input type="submit" name="break" value="Je prends une pause" />
 
 	<center><button type="button">Refresh</button></center>
+
+
+
+
+	<a onclick="openNewTab();">app2</a>
+
+	<a onclick="refreshNewTab();">Refresh</a>
+	<script>
+		var childWindow = "";
+		var openTab ="salon.php";
+
+		function openNewTab(){
+	        childWindow = window.open(openTab);
+	    }	    
+	</script>
 </form>
 </body>
 </html>
