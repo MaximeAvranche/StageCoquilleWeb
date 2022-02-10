@@ -40,9 +40,9 @@
 
 
 
-	<a onclick="openNewTab();">app2</a>
+	<a onclick="openNewTab();">Ouvrir un onglet</a>
 
-	<a onclick="refreshNewTab();">Refresh</a>
+	<a onclick="refreshNewTab();">Rafraîchir</a>
 	<script>
 		var childWindow = "";
 		var openTab ="salon.php";
@@ -51,6 +51,9 @@
 	        childWindow = window.open(openTab);
 	    }	    
 	</script>
+
+	<h2>Test de clôture</h2>
+	<input type="submit" name="cloturer" value="Clôturer la journée" style="background-color: red; border-color: red; border-radius: 5px; color: #fff;" />
 </form>
 </body>
 </html>

@@ -92,4 +92,40 @@
     $db->break($breakTimeDisponible, $breakTimeOccupe);
     header('Location: index.php');
    }
+
+
+
+   /**
+    * 
+    * Modifications de 'Daily'
+    *  
+    **/
+
+   // Btn de clôture pressé
+   if (isset($_POST['cloturer'])) {
+    // Appel de la fonction
+    $resSumDaily = $db->sumDaily();
+    // Variables - Before
+    $set_client = 'total_clients';
+    $as_client = 'total';
+
+
+    // Variables - After
+    $clients = $resSumDaily['total'];
+    $employes = $resSumDaily['employes'];
+    // Envoie des données
+        //$db->insertStats($resultat['date'], $resultat['id_emp']);
+   }
+
+
+
+
+   /*if($resSelectDatabase['date'] == date('Y-m-d')) {
+      // Variables à stockers
+      $total_clients = $resSelectDatabase['buffer'];
+      $employes = array('Maxime', 'Steven');
+
+      $db->insertStats($date_current, $total_clients, $employes_presents);
+      header('Location: index.php');
+   }*/
 ?>

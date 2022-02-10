@@ -5,7 +5,6 @@
   * Tous droits réservés
  **/
 
-
 /* Connexion base de données */
   class ConnexionBase
       {
@@ -96,6 +95,39 @@
 
 
 
+          /****************************************
+           * 
+           * FONCTIONS POUR LA TABLE DAILY
+           * Utilisation non visible (en background)
+           * 
+           ***************************************/
+
+
+          function sumDaily() {
+            $sumDaily = $this->bdd->prepare('SELECT SUM(total_clients) AS total FROM daily');
+            $sumDaily->execute();
+            $resSumDaily = $sumDaily->fetch();
+            return $resSumDaily;
+          }
+
+
+
+
+          /****************************************
+           * 
+           * FONCTIONS DE STATISTIQUES
+           * Utilisation réccurente
+           * 
+           ***************************************/
+
+          function insertStats($date, $clients, $employes) {
+            $insertStats = $this->bdd->prepare('INSERT INTO stats VALUES(0, ?, ?, ?)');
+            $insertStats->execute(array($date, $clients, $employes));
+            return $insertStats;
+          }
+
+
+
 
           /****************************************
            * 
@@ -119,7 +151,7 @@
           }*/
           
 
-          /*// Modifier le nombre d'employés
+          // Modifier le nombre d'employés
           function updateValues($set_value, $value) {
             $updateValues = $this->bdd->prepare('UPDATE configuration SET '.$set_value.' WHERE id = 1');
             $updateValues->execute(array($value));
@@ -127,12 +159,15 @@
             if ($set_value == "nbr_employe = ?") {
               $nbr_employe = $this->addEmploye($value, 0);
             }
-          }*/
+          }
 
           // Ajouter le prénom d'un employé
           function addName($name) {
-            $addName = $this->bdd->prepare('INSERT INTO configuration VALUES(0, ?, null, null)');
-            $addName->execute(array($name));
+            // Création d'un ID
+            $id_emp = $this->id_emp($name);
+            // Insertion
+            $addName = $this->bdd->prepare('INSERT INTO configuration VALUES(0, ?, ?, null, null, null, null, null, null, null, null)');
+            $addName->execute(array($id_emp, $name));
             // Afficher sur l'administration le nombre exact d'employé sans modifier les autres valeurs
             $resCountEmployee = $this->countEmployee();
             $total = $resCountEmployee['id'] - 1;
@@ -165,6 +200,22 @@
             $resCountEmployee = $countEmployee->fetch();
             return $resCountEmployee;
           }
+
+
+
+
+
+          // Créer un id_emp
+          function id_emp($prenom) {
+            // Sécurité
+            $prenom = htmlspecialchars($prenom);
+            // Création de l'identifiant
+            $prenom = strtoupper($prenom);
+            $prenom = substr($prenom, 0, 2);
+            $id_emp = $prenom.rand(1000, 9999);
+            return $id_emp;
+          }
+
 
 
 
