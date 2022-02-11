@@ -3,3 +3,23 @@
 body {
 	font-family: 'Montserrat', sans-serif;
 }
+
+span {
+	color: turquoise;
+}
+
+.stats {
+	color: royalblue;
+	font-weight: 900;
+	margin-left: 15px;
+}
+
+.variationGood {
+	color: limegreen;
+	font-weight: 900;
+}
+
+.variationBad {
+	color: red;
+	font-weight: 900;
+}

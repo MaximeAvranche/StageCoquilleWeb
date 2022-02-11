@@ -130,6 +130,29 @@
     }
    }
 
+   if (isset($_POST['choixdate'])) {
+      $chosedate = $_POST['choixdate'];
+      $resSelectStats = $db->selectStats($chosedate);
+      // Variables
+      $total_clients = $resSelectStats['total_clients'];
+      $employes = $resSelectStats['employes'];
+      $total_clients_traites = $resSelectStats['total_clients_traites'];
+      
+      // Conditions
+      if ($total_clients_traites > $total_clients) {
+        $variation = "variationGood";
+        $value = "+" . ($total_clients_traites - $total_clients);
+      }
+      else if ($total_clients_traites == $total_clients) {
+        $variation = "variationGood";
+        $value = "Tous les clients ont été traités";
+      }
+      else {
+        $variation = "variationBad";
+        $value = "- " . ($total_clients - $total_clients_traites);
+      }
+   }
+
 
 
 

@@ -154,6 +154,13 @@
             return $insertStats;
           }
 
+          function selectStats($date) {
+            $selectStats = $this->bdd->prepare('SELECT * FROM stats WHERE date = ?');
+            $selectStats->execute(array($date));
+            $resSelectStats = $selectStats->fetch();
+            return $resSelectStats;
+          }
+
 
           /****************************************
            * 
