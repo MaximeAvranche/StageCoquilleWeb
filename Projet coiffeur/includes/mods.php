@@ -113,8 +113,9 @@ $resSumDaily = $db->sumDaily();
     // Envoie des données
     $db->insertStats($date, $clients, $employes, $buffer);
     // Remettre à 0 le buffer
-    $db->updateCreneau($nbr_employe_total, 0, 0, 0);
+    $db->updateCreneau($nbr_employe_total, 0, 0, 0, 0);
     // Supprimer les données de 'daily'
+    $db->deleteDaily();
     header('Location: index.php');
    }
 

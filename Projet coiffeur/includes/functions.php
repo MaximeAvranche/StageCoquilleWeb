@@ -45,9 +45,9 @@
           }
 
           // Mise à jour d'un jour
-          function updateCreneau($nbr_disponible, $nbr_occupe, $tps_attente, $nbr_clients) {
-            $updateCreneau = $this->bdd->prepare('UPDATE current SET nbr_disponible = ?, nbr_occupe = ?, tps_attente = ?, nbr_clients = ? WHERE id = 1');
-            $updateCreneau->execute(array($nbr_disponible, $nbr_occupe, $tps_attente, $nbr_clients));
+          function updateCreneau($nbr_disponible, $nbr_occupe, $tps_attente, $nbr_clients, $buffer) {
+            $updateCreneau = $this->bdd->prepare('UPDATE current SET nbr_disponible = ?, nbr_occupe = ?, tps_attente = ?, nbr_clients = ?, buffer = ? WHERE id = 1');
+            $updateCreneau->execute(array($nbr_disponible, $nbr_occupe, $tps_attente, $nbr_clients, $buffer));
           }
 
 
@@ -129,6 +129,10 @@
 
 
           // Supprimer les valeurs de la table
+          function deleteDaily() {
+            $deleteDaily = $this->bdd->prepare('DELETE FROM daily WHERE id_emp IS NOT null');
+            $deleteDaily->execute(array(date('Y-m-d')));
+          }
 
 
 
