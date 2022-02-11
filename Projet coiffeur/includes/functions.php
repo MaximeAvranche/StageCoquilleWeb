@@ -9,7 +9,7 @@
        /*****************************************\
       /** I - Connexion à la base de données    **\
      /** II - Fonctions principales              **\
-    /** III - Fonctions pour la table 'daily'     **\
+    /** III - Fonctions pour la table `daily`     **\
    /** IV - Fonctions de statistiques              **\
   /** V - Fonctions de configuration                **\
  /*****************************************************\
@@ -104,7 +104,7 @@
 
           /****************************************
            * 
-           * FONCTIONS POUR LA TABLE DAILY
+           * FONCTIONS POUR LA TABLE `DAILY`
            * Utilisation non visible (en background)
            * 
            ***************************************/
@@ -143,7 +143,7 @@
 
           /****************************************
            * 
-           * FONCTIONS DE STATISTIQUES
+           * FONCTIONS DE `STATS`
            * Utilisation réccurente
            * 
            ***************************************/
@@ -157,7 +157,7 @@
 
           /****************************************
            * 
-           * FONCTIONS DE CONFIGURATION
+           * FONCTIONS DE `CONFIGURATION`
            * Utilisation sur la page configuration
            * 
            ***************************************/

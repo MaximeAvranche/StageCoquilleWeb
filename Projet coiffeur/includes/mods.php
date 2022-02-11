@@ -100,27 +100,34 @@
    }
 
 
-
    /**
     * 
-    * Modifications de 'Daily'
+    * Modifications de `daily`
     *  
     **/
-$resSumDaily = $db->sumDaily();
-   // Btn de clôture pressé
-   if (isset($_POST['cloturer'])) {
+
+
+    $resSumDaily = $db->sumDaily();
+    // Btn de clôture pressé
+    if (isset($_POST['cloturer'])) {
     // Variables
-    $date = $resSelectDaily['date'];
+
+    $date = isset($resSelectDaily['date']);
     $clients = $resSumDaily['total'];
     $employes = $resCountDaily['id'];
     $buffer = $resSelectDatabase['buffer'];
-    // Envoie des données
-    $db->insertStats($date, $clients, $employes, $buffer);
-    // Remettre à 0 le buffer
-    $db->updateCreneau($nbr_employe_total, 0, 0, 0, 0);
-    // Supprimer les données de 'daily'
-    $db->deleteDaily();
-    header('Location: index.php');
+    if ($employes > 0) {
+      // Envoie des données
+      $db->insertStats($date, $clients, $employes, $buffer);
+      // Remettre à 0 le buffer
+      $db->updateCreneau($nbr_employe_total, 0, 0, 0, 0);
+      // Supprimer les données de 'daily'
+      $db->deleteDaily();
+      header('Location: index.php');
+    }
+    else {
+      echo "<strong style='color: red;'>Erreur : les données ont déjà été envoyées</strong>";
+    }
    }
 
 
