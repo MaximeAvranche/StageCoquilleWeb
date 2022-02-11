@@ -31,7 +31,7 @@
 
 // Réinitialiser valeurs de tests
    if(isset($_POST['reinitialiser'])) {
-    $updateCreneau = $db->updateCreneau($nbr_employe_total, 0, 0, 3);
+    $updateCreneau = $db->updateCreneau($nbr_employe_total, 0, 0, 3, 0);
     header('Location: index.php');
    }
 
@@ -48,14 +48,14 @@
      }
      else {
       // Employés supérieurs aux clients
-      if ($resSelectDatabase['nbr_disponible'] >= $resSelectDatabase['nbr_client']) {
+      if ($resSelectDatabase['nbr_disponible'] >= $resSelectDatabase['nbr_clients']) {
         $new_occupe = $resSelectDatabase['nbr_occupe'] + 1;
-        $updateCreneau = $db->updateCreneau($new_disponible, $new_occupe, $resSelectDatabase['tps_attente'], $new_clients);
+        $updateCreneau = $db->updateCreneau($new_disponible, $new_occupe, $resSelectDatabase['tps_attente'], $new_clients, 1);
         header('Location: index.php');
       }
       // Employés inférieurs aux clients
-      else if ($resSelectDatabase['nbr_disponible'] < $resSelectDatabase['nbr_client']) {
-        $updateCreneau = $db->updateCreneau($new_disponible, $new_attente, $new_clients);
+      else if ($resSelectDatabase['nbr_disponible'] < $resSelectDatabase['nbr_clients']) {
+        $updateCreneau = $db->updateCreneau($new_disponible, $new_occupe, $resSelectDatabase['tps_attente'], $new_clients, 1);
         header('Location: index.php');
       }
     }
