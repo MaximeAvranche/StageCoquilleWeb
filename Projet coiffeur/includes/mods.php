@@ -137,21 +137,30 @@
       $total_clients = $resSelectStats['total_clients'];
       $employes = $resSelectStats['employes'];
       $total_clients_traites = $resSelectStats['total_clients_traites'];
-      
+
       // Conditions
       if ($total_clients_traites > $total_clients) {
         $variation = "variationGood";
         $value = "+" . ($total_clients_traites - $total_clients);
       }
-      else if ($total_clients_traites == $total_clients) {
-        $variation = "variationGood";
-        $value = "Tous les clients ont été traités";
-      }
-      else {
-        $variation = "variationBad";
-        $value = "- " . ($total_clients - $total_clients_traites);
-      }
-   }
+        else if ($total_clients_traites == $total_clients) {
+          $variation = "variationGood";
+          $value = "Tous les clients ont été traités";
+        }
+        else {
+          $variation = "variationBad";
+          $value = "- " . ($total_clients - $total_clients_traites);
+        }
+    }
+    else {
+      $chosedate = null;
+      $total_clients = null;
+      $total_clients_traites = null;
+      $value = null;
+      $variation = null;
+      $employes = null;
+      $chosedate = null; 
+    }
 
 
 
