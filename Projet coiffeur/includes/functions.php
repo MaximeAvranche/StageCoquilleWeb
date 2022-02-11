@@ -5,6 +5,15 @@
   * Tous droits réservés
  **/
 
+        /******************MENU*****************\
+       /*****************************************\
+      /** I - Connexion à la base de données    **\
+     /** II - Fonctions principales              **\
+    /** III - Fonctions pour la table 'daily'     **\
+   /** IV - Fonctions de statistiques              **\
+  /** V - Fonctions de configuration                **\
+ /*****************************************************\
+
 /* Connexion base de données */
   class ConnexionBase
       {
@@ -44,12 +53,11 @@
 
           }
 
-          // Mise à jour d'un jour
+          // Mise à jour d'un créneau
           function updateCreneau($nbr_disponible, $nbr_occupe, $tps_attente, $nbr_clients, $buffer) {
             $updateCreneau = $this->bdd->prepare('UPDATE current SET nbr_disponible = ?, nbr_occupe = ?, tps_attente = ?, nbr_clients = ?, buffer = ? WHERE id = 1');
             $updateCreneau->execute(array($nbr_disponible, $nbr_occupe, $tps_attente, $nbr_clients, $buffer));
           }
-
 
           // Récupérer les informations 
           function selectInformation() {
@@ -94,7 +102,6 @@
           }
 
 
-
           /****************************************
            * 
            * FONCTIONS POUR LA TABLE DAILY
@@ -127,16 +134,11 @@
             return $resCountDaily;
           }
 
-
           // Supprimer les valeurs de la table
           function deleteDaily() {
             $deleteDaily = $this->bdd->prepare('DELETE FROM daily WHERE id_emp IS NOT null');
-            $deleteDaily->execute(array(date('Y-m-d')));
+            $deleteDaily->execute();
           }
-
-
-
-
 
 
           /****************************************
@@ -151,8 +153,6 @@
             $insertStats->execute(array($date, $clients, $employes, $buffer));
             return $insertStats;
           }
-
-
 
 
           /****************************************

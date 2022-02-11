@@ -47,15 +47,19 @@
       header('Location: index.php');  
      }
      else {
+      // Mise à jour du buffer 
+      $buffer = $resSelectDatabase['buffer'];
+      $clcBuffer = $buffer + 1;
+
       // Employés supérieurs aux clients
       if ($resSelectDatabase['nbr_disponible'] >= $resSelectDatabase['nbr_clients']) {
         $new_occupe = $resSelectDatabase['nbr_occupe'] + 1;
-        $updateCreneau = $db->updateCreneau($new_disponible, $new_occupe, $resSelectDatabase['tps_attente'], $new_clients, 1);
+        $updateCreneau = $db->updateCreneau($new_disponible, $new_occupe, $resSelectDatabase['tps_attente'], $new_clients, $clcBuffer);
         header('Location: index.php');
       }
       // Employés inférieurs aux clients
       else if ($resSelectDatabase['nbr_disponible'] < $resSelectDatabase['nbr_clients']) {
-        $updateCreneau = $db->updateCreneau($new_disponible, $new_occupe, $resSelectDatabase['tps_attente'], $new_clients, 1);
+        $updateCreneau = $db->updateCreneau($new_disponible, $new_occupe, $resSelectDatabase['tps_attente'], $new_clients, $clcBuffer);
         header('Location: index.php');
       }
     }
