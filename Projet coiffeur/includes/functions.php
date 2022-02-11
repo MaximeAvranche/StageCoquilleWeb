@@ -102,13 +102,35 @@
            * 
            ***************************************/
 
+          // Sélection des données de la table daily
+          function selectDaily() {
+            $selectDaily = $this->bdd->prepare('SELECT * FROM daily LIMIT 1');
+            $selectDaily->execute();
+            $resSelectDaily = $selectDaily->fetch();
+            return $resSelectDaily;
+          }
 
+          // Addition du nombre de clients traités
           function sumDaily() {
-            $sumDaily = $this->bdd->prepare('SELECT SUM(total_clients) AS total FROM daily');
+            $sql = "SELECT SUM(total_clients) AS total FROM daily";
+            $sumDaily = $this->bdd->prepare($sql);
             $sumDaily->execute();
             $resSumDaily = $sumDaily->fetch();
             return $resSumDaily;
           }
+
+          // Compter le nombre d'employés
+          function countDaily() {
+            $countDaily = $this->bdd->prepare('SELECT COUNT(id) as id FROM daily');
+            $countDaily->execute();
+            $resCountDaily = $countDaily->fetch();
+            return $resCountDaily;
+          }
+
+
+          // Supprimer les valeurs de la table
+
+
 
 
 
@@ -120,9 +142,9 @@
            * 
            ***************************************/
 
-          function insertStats($date, $clients, $employes) {
-            $insertStats = $this->bdd->prepare('INSERT INTO stats VALUES(0, ?, ?, ?)');
-            $insertStats->execute(array($date, $clients, $employes));
+          function insertStats($date, $clients, $employes, $buffer) {
+            $insertStats = $this->bdd->prepare('INSERT INTO stats VALUES(0, ?, ?, ?, ?)');
+            $insertStats->execute(array($date, $clients, $employes, $buffer));
             return $insertStats;
           }
 

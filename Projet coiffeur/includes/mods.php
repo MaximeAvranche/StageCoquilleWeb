@@ -6,6 +6,8 @@
    $resSelectConfiguration = $db->selectConfiguration();
    $resSelectInformation = $db->selectInformation();
    $resCountEmployee = $db->countEmployee();
+   $resCountDaily = $db->countDaily();
+   $resSelectDaily = $db->selectDaily();
 
    // Définition des variables
    $employe_total = $resSelectDatabase['nbr_disponible'] + $resSelectDatabase['nbr_occupe'];
@@ -100,21 +102,20 @@
     * Modifications de 'Daily'
     *  
     **/
-
+$resSumDaily = $db->sumDaily();
    // Btn de clôture pressé
    if (isset($_POST['cloturer'])) {
-    // Appel de la fonction
-    $resSumDaily = $db->sumDaily();
-    // Variables - Before
-    $set_client = 'total_clients';
-    $as_client = 'total';
-
-
-    // Variables - After
+    // Variables
+    $date = $resSelectDaily['date'];
     $clients = $resSumDaily['total'];
-    $employes = $resSumDaily['employes'];
+    $employes = $resCountDaily['id'];
+    $buffer = $resSelectDatabase['buffer'];
     // Envoie des données
-        //$db->insertStats($resultat['date'], $resultat['id_emp']);
+    $db->insertStats($date, $clients, $employes, $buffer);
+    // Remettre à 0 le buffer
+    $db->updateCreneau($nbr_employe_total, 0, 0, 0);
+    // Supprimer les données de 'daily'
+    header('Location: index.php');
    }
 
 
